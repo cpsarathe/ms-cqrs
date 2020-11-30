@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@Document(collation = "users")
+@Document("users")
 public class User {
     @Id
     private String id;
