@@ -7,6 +7,7 @@ import lombok.extern.apachecommons.CommonsLog;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -23,6 +24,7 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<RegisterUserResponseDto> registerUser(@RequestBody RegisterUserCommand registerUserCommand) {
         try {
             registerUserCommand.setId(UUID.randomUUID().toString());
@@ -35,6 +37,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAuthority('WRITE_PRIVILEGE')")
     @PutMapping("/{id}")
     public ResponseEntity<RegisterUserResponseDto> updateUser(@PathVariable(value = "id") String id , @RequestBody UpdateUserCommand updateUserCommand) {
         try {
