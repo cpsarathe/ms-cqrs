@@ -15,6 +15,8 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.UUID;
 
@@ -23,15 +25,12 @@ public class UserAggregate {
     @AggregateIdentifier
     private String id;
     private User user;
-    private PasswordEncoder passwordEncoder;
-
     public UserAggregate() {
-        passwordEncoder = new PasswordEncoderImpl();
     }
 
-    @Autowired
     @CommandHandler
-    public UserAggregate(RegisterUserCommand registerUserCommand) {
+    public UserAggregate(RegisterUserCommand registerUserCommand,
+                         @Autowired @Qualifier("msPasswordEncoder") @Lazy PasswordEncoder passwordEncoder) {
         this();
         User user = registerUserCommand.getUser();
         user.setId(registerUserCommand.getId());
@@ -47,7 +46,8 @@ public class UserAggregate {
     }
 
     @CommandHandler
-    public void handle(UpdateUserCommand updateUserCommand) {
+    public void handle(UpdateUserCommand updateUserCommand,
+                       @Autowired @Qualifier("msPasswordEncoder") @Lazy PasswordEncoder passwordEncoder) {
         User user = updateUserCommand.getUser();
         user.setId(updateUserCommand.getId());
         String password = user.getAccount().getPassword();

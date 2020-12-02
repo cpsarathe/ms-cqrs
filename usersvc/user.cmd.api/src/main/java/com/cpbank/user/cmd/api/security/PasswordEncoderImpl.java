@@ -3,7 +3,7 @@ package com.cpbank.user.cmd.api.security;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("msPasswordEncoder")
 public class PasswordEncoderImpl implements PasswordEncoder {
     @Override
     public String hashPassword(String password) {
