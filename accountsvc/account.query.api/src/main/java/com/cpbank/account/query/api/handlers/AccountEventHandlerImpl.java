@@ -11,6 +11,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 @Service
@@ -44,7 +45,9 @@ public class AccountEventHandlerImpl implements AccountEventHandler {
         if (!bankAccount.isPresent()) {
             return;
         }
-        bankAccount.get().setAccountBalance(fundsDepositedEvent.getBalance());
+        BigDecimal balance = bankAccount.get().getAccountBalance();
+        balance  = balance.add(fundsDepositedEvent.getAmount());
+        bankAccount.get().setAccountBalance(balance);
         accountRepository.save(bankAccount.get());
     }
 
