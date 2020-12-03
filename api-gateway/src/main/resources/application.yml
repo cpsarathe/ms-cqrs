@@ -5,19 +5,23 @@ spring:
   cloud:
     gateway:
       routes:
-        - id : userCmdApi-RegisterUser
-          uri: http://localhost:11281/api/v1/user
-          predicates:
-            - Path=/api/v1/user
-        - id : userCmdApi-UpdatedUser
-          uri: http://localhost:11281/api/v1/user/**
-          predicates:
-            - Path=/api/v1/user/**
-        - id : userCmdApi-RemoveUser
-          uri: http://localhost:11281/api/v1/user/**
-          predicates:
-            - Path=/api/v1/user/**
+#        - id : userCmdApi-RegisterUser
+#          uri: http://localhost:11281/api/v1/user
+#          predicates:
+#            - Path=/api/v1/user
         - id: userQueryApi-UserLookup
           uri: http://localhost:11282/api/v1/user/lookup/**
           predicates:
             - Path=/api/v1/user/lookup/**
+#        - id : userCmdApi-UpdatedUser
+#          uri: http://localhost:11281/api/v1/user/**
+#          predicates:
+#            - Path=/api/v1/user/**
+#        - id : userCmdApi-RemoveUser
+#          uri: http://localhost:11281/api/v1/user/**
+#          predicates:
+#            - Path=/api/v1/user/**
+        - id: bankCmdApi-OpenAccount
+          uri: http://localhost:21281/api/v1/bank-account
+          predicates:
+            - Path=/api/v1/bank-account
